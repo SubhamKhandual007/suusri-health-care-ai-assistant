@@ -13,14 +13,6 @@ export default defineConfig({
         headers: {
             'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
         },
-        proxy: {
-            '/api': {
-                target: 'http://127.0.0.1:8000',
-                changeOrigin: true,
-                secure: false,
-                rewrite: (path) => path.replace(/^\/api/, ''),
-            },
-        },
     },
     build: {
         outDir: 'build',
@@ -30,8 +22,6 @@ export default defineConfig({
                 manualChunks: {
                     // Vendor chunks for better caching
                     'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-                    'vendor-firebase': ['firebase'],
-                    'vendor-ai': ['@google/generative-ai'],
                     'vendor-ui': ['react-bootstrap', 'framer-motion'],
                 },
             },

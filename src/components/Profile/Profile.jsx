@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getFirebase } from '../../lib/firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
 import './Profile.css';
 
 const Profile = () => {
@@ -47,7 +48,13 @@ const Profile = () => {
         }
     }, [navigate]);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        try {
+            const { auth } = getFirebase();
+            await signOut(auth);
+        } catch (err) {
+            console.error("Logout error:", err);
+        }
         localStorage.removeItem('user');
         navigate('/');
     };
