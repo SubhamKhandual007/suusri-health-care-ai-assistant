@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from "./Footer";
 import { motion, AnimatePresence } from "framer-motion";
+import './Welcome.css';
 
 export default function Welcome() {
     const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -54,6 +55,7 @@ export default function Welcome() {
             <AnimatePresence>
                 {showInstallPopup && deferredPrompt && (
                     <motion.div
+                        className="install-popup"
                         initial={{ opacity: 0, scale: 0.8, y: 50 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.8, y: 50 }}

@@ -70,18 +70,26 @@
 
 /* Responsive Footer */
 @media (max-width: 768px) {
+  .footer {
+    padding: 40px 0;
+  }
+
   .footer-about {
     font-size: 14px;
-    padding: 0 10px;
+    padding: 0 15px;
+  }
+
+  .footer-about p {
+    margin: 8px 0;
   }
 
   .footer-social a {
     margin: 8px 5px;
     padding: 8px 15px;
     font-size: 14px;
-    display: inline-block;
-    width: 45%;
-    /* Two icons per row on medium screens */
+    display: inline-flex;
+    width: calc(50% - 16px);
+    justify-content: center;
   }
 
   .footer-smiley {
@@ -90,9 +98,44 @@
 }
 
 @media (max-width: 480px) {
+  .footer {
+    padding: 30px 0;
+  }
+
+  .footer-about {
+    font-size: 13px;
+    padding: 0 10px;
+  }
+
+  .footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 10px;
+  }
+
   .footer-social a {
-    width: 90%;
-    /* One icon per row on small screens */
-    margin: 5px auto;
+    width: calc(50% - 8px);
+    margin: 0;
+    padding: 10px 8px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .footer-smiley {
+    font-size: 14px;
+    margin-top: 15px;
+  }
+
+  .footer-text {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .footer-social a {
+    width: 100%;
+    font-size: 12px;
   }
 }

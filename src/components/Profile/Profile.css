@@ -29,6 +29,27 @@
     padding-bottom: 20px;
 }
 
+@media (max-width: 480px) {
+    .profile-container {
+        padding: 10px;
+    }
+
+    .profile-card {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .profile-header {
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+
+    .profile-header h2 {
+        font-size: 1.2rem;
+    }
+}
+
 .back-btn {
     background: none;
     border: none;
@@ -62,6 +83,18 @@
     margin-bottom: 40px;
 }
 
+@media (max-width: 480px) {
+    .profile-pic-large {
+        width: 100px;
+        height: 100px;
+        border-width: 3px;
+    }
+
+    .profile-info {
+        margin-bottom: 25px;
+    }
+}
+
 .info-group {
     margin-bottom: 20px;
 }
@@ -80,6 +113,20 @@
     font-weight: 500;
 }
 
+@media (max-width: 480px) {
+    .info-group {
+        margin-bottom: 15px;
+    }
+
+    .info-group label {
+        font-size: 0.75rem;
+    }
+
+    .info-group p {
+        font-size: 1rem;
+    }
+}
+
 .logout-btn {
     width: 100%;
     padding: 15px;
@@ -95,6 +142,14 @@
     gap: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+@media (max-width: 480px) {
+    .logout-btn {
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 12px;
+    }
 }
 
 .logout-btn:hover {
