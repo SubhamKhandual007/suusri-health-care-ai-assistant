@@ -1,6 +1,7 @@
 {
   "name": "SuuSri - Your Smart AI Assistant",
-  "short_name": "SuuSri",
+  "short_name": "SuuSri AI",
+  "id": "/?source=pwa",
   "description": "SuuSri: Your AI Assistant, smarter than autocorrect. Multi-lingual, offline-ready, and smarter every day.",
   "lang": "en",
   "categories": ["productivity", "utilities", "assistant", "AI"],
@@ -11,61 +12,29 @@
   "background_color": "#1a1a2e",
   "theme_color": "#6366f1",
   "prefer_related_applications": false,
-  
   "icons": [
     {
-      "src": "/suu-icon.png",
-      "sizes": "48x48",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/x-icon"
     },
     {
-      "src": "/suu-icon.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/suu-icon.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/suu-icon.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/suu-icon.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/suu-icon.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/suu-icon.png",
+      "src": "/suu-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/suu-icon.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/suu-icon.png",
+      "src": "/suu-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/suu-icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   
@@ -85,21 +54,21 @@
       "short_name": "Chat",
       "description": "Start a new conversation",
       "url": "/chat?source=shortcut",
-      "icons": [{ "src": "/suu-icon.png", "sizes": "96x96" }]
+      "icons": [{ "src": "/suu-icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Talk",
       "short_name": "Talk",
       "description": "Voice chat with AI",
       "url": "/talk?source=shortcut",
-      "icons": [{ "src": "/suu-icon.png", "sizes": "96x96" }]
+      "icons": [{ "src": "/suu-icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Profile",
       "short_name": "Profile",
       "description": "View your profile",
       "url": "/profile?source=shortcut",
-      "icons": [{ "src": "/suu-icon.png", "sizes": "96x96" }]
+      "icons": [{ "src": "/suu-icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ],
   
