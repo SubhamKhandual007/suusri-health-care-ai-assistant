@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 
 // Cache configuration with versioning
-const CACHE_VERSION = 'suusri-cache-v2';
+const CACHE_VERSION = 'suusri-cache-v4';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const FLASH_IMAGE = '/suu4.png';
@@ -75,19 +75,27 @@ self.addEventListener('fetch', (event) => {
 
 // Stale-While-Revalidate strategy
 async function staleWhileRevalidate(request) {
-  const cache = await caches.open(DYNAMIC_CACHE);
-  const cachedResponse = await cache.match(request);
+  const cachedResponse = await caches.match(request, { ignoreSearch: true });
 
-  const fetchPromise = fetch(request).then((response) => {
+  const fetchPromise = fetch(request).then(async (response) => {
     // Only cache valid responses
-    if (response.ok) {
+    if (response && response.ok) {
+      const cache = await caches.open(DYNAMIC_CACHE);
       cache.put(request, response.clone());
     }
     return response;
-  }).catch((error) => {
+  }).catch(async (error) => {
     console.log('Fetch failed:', error);
     // Return cached response if network fails
-    return cachedResponse;
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    // Fallback for navigation requests
+    if (request.mode === 'navigate') {
+      const fallback = await caches.match('/index.html');
+      if (fallback) return fallback;
+    }
+    return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
   });
 
   // Return cached response immediately, then update cache
@@ -98,15 +106,21 @@ async function staleWhileRevalidate(request) {
 async function networkFirst(request) {
   try {
     const response = await fetch(request);
-    if (response.ok) {
+    if (response && response.ok) {
       const cache = await caches.open(DYNAMIC_CACHE);
       cache.put(request, response.clone());
     }
     return response;
   } catch (error) {
-    const cache = await caches.open(DYNAMIC_CACHE);
-    const cachedResponse = await cache.match(request);
-    return cachedResponse || new Response('Offline', { status: 503 });
+    const cachedResponse = await caches.match(request, { ignoreSearch: true });
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    if (request.mode === 'navigate') {
+      const fallback = await caches.match('/index.html');
+      if (fallback) return fallback;
+    }
+    return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
   }
 }
 
