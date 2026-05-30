@@ -19,6 +19,7 @@ const VideoConsultation = () => {
   const hasStarted = useRef(false);
   const userVideoRef = useRef(null);
   const streamRef = useRef(null);
+  const [cameraError, setCameraError] = useState("");
 
   const speakText = useCallback((text) => {
     if (typeof window === 'undefined') return;
@@ -112,6 +113,10 @@ const VideoConsultation = () => {
     // Request Webcam access
     const startWebcam = async () => {
       try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          setCameraError("Camera requires HTTPS or supported browser.");
+          return;
+        }
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         streamRef.current = stream;
         if (userVideoRef.current) {
@@ -119,6 +124,11 @@ const VideoConsultation = () => {
         }
       } catch (err) {
         console.error("Error accessing webcam:", err);
+        if (err.name === 'NotAllowedError') {
+          setCameraError("Camera access denied.");
+        } else {
+          setCameraError("Camera not found/unavailable.");
+        }
       }
     };
     startWebcam();
@@ -258,13 +268,19 @@ const VideoConsultation = () => {
 
       {/* Top Right User Video */}
       <div className={styles.userVideoTopRight}>
-        <video 
-          ref={userVideoRef} 
-          autoPlay 
-          playsInline 
-          muted 
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
+        {cameraError ? (
+          <div style={{ color: '#ff6b6b', fontSize: '0.7rem', padding: '10px', textAlign: 'center', display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }}>
+            {cameraError}
+          </div>
+        ) : (
+          <video 
+            ref={userVideoRef} 
+            autoPlay 
+            playsInline 
+            muted 
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        )}
       </div>
 
       <div className={styles.mainContent}>
