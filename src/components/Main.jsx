@@ -47,7 +47,7 @@ const Main = () => {
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
+    viewport: { once: true, margin: "100px" },
     transition: { duration: 0.8, ease: "easeOut" }
   };
 
@@ -126,7 +126,6 @@ const Main = () => {
                   src={icon1}
                   alt="SuuSri AI"
                   className="img-fluid custom-image"
-                  loading="lazy"
                   animate={{ y: [0, 15, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                 />
@@ -147,7 +146,6 @@ const Main = () => {
                   src={icon2}
                   alt="Intelligent Assistant"
                   className="img-fluid custom-image"
-                  loading="lazy"
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 />

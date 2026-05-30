@@ -7,7 +7,7 @@
   /* Let navbar overlay */
   color: antiquewhite;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Animated Background Blobs */
