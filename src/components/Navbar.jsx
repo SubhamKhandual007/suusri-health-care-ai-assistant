@@ -74,7 +74,7 @@ export default function Navbar() {
                             className="btn btn-sm d-flex align-items-center"
                             style={{ background: 'linear-gradient(90deg, #6366f1, #a855f7)', color: 'white', borderRadius: '20px', padding: '5px 12px', border: 'none', fontWeight: 'bold', fontSize: '0.85rem' }}
                         >
-                            <i className="fas fa-video me-1"></i> <span className="d-none d-sm-inline">Consult</span>
+                            <i className="fas fa-video me-1"></i> <span>Consult</span>
                         </button>
 
                         <div className="nav-profile-wrapper" ref={dropdownRef}>

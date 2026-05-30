@@ -108,7 +108,7 @@ const Main = () => {
             {...fadeInUp}
           >
             <div className="row align-items-center">
-              <div className="col-md-6 order-1 order-md-1 text-center">
+              <div className="col-md-6 order-2 order-md-1 text-center">
                 <h1 className="header">
                   <b>Your</b> <span className="suuSriText">Personalized</span> <br />
                   <b>Healthcare Intelligence</b>
@@ -121,7 +121,7 @@ const Main = () => {
                   </span>
                 </button>
               </div>
-              <div className="col-md-6 order-2 order-md-2">
+              <div className="col-md-6 order-1 order-md-2">
                 <motion.img
                   src={icon1}
                   alt="SuuSri AI"
