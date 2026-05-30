@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 
 // Cache configuration with versioning
-const CACHE_VERSION = 'suusri-cache-v5';
+const CACHE_VERSION = 'suusri-cache-v6';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const FLASH_IMAGE = '/suu4.png';
