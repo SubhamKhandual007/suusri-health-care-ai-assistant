@@ -13,6 +13,7 @@ const VideoConsultation = () => {
   const [aiResponse, setAiResponse] = useState("");
   const [conversationHistory, setConversationHistory] = useState([]);
   const [textInput, setTextInput] = useState("");
+  const [isAiTyping, setIsAiTyping] = useState(false);
   
   const recognition = useRef(null);
   const hasStarted = useRef(false);
@@ -144,6 +145,7 @@ const VideoConsultation = () => {
     
     const newHistory = [...conversationHistory, { role: "user", content: text }];
     setConversationHistory(newHistory);
+    setIsAiTyping(true); // Show typing indicator
     
     try {
       const systemPrompt = `You are Suusri, an advanced AI doctor with comprehensive knowledge across all medical departments, diseases, and diagnoses. 
@@ -175,12 +177,14 @@ const VideoConsultation = () => {
       const data = await response.json();
       const aiText = data.choices[0]?.message?.content;
       
+      setIsAiTyping(false); // Hide typing indicator
       setConversationHistory([...newHistory, { role: "assistant", content: aiText }]);
       speakText(aiText);
       setTranscription("");
       
     } catch (error) {
       console.error("Error fetching AI response:", error);
+      setIsAiTyping(false); // Hide typing indicator on error
       const errorMsg = "I'm sorry, I am experiencing connection issues. Please try speaking again.";
       setAiResponse(errorMsg);
       speakText(errorMsg);
@@ -279,9 +283,16 @@ const VideoConsultation = () => {
                 {msg.content}
               </div>
             ))}
-            {transcription && !aiResponse && (
+            {transcription && !aiResponse && !isAiTyping && (
               <div className={styles.userMsg}>
                 <em>{transcription}</em>
+              </div>
+            )}
+            {isAiTyping && (
+              <div className={styles.aiMsg}>
+                <div className={styles.typingIndicator}>
+                  <span></span><span></span><span></span>
+                </div>
               </div>
             )}
           </div>
