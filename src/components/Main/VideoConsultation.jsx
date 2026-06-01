@@ -20,6 +20,8 @@ const VideoConsultation = () => {
   const userVideoRef = useRef(null);
   const streamRef = useRef(null);
   const [cameraError, setCameraError] = useState("");
+  const latestTranscriptRef = useRef("");
+  const handleUserAudioRef = useRef(null);
 
   const speakText = useCallback((text) => {
     if (typeof window === 'undefined') return;
@@ -76,34 +78,34 @@ const VideoConsultation = () => {
       recognition.current = new SpeechRecognition();
       recognition.current.continuous = false;
       recognition.current.interimResults = true;
-      recognition.current.lang = "en-IN"; // Set to en-IN for better hinglish recognition
+      recognition.current.lang = "en-IN"; // Set to en-IN so Hindi is written in English letters (Hinglish)
 
       recognition.current.onresult = (event) => {
-        let interimTranscript = '';
-        let finalTranscript = '';
+        let fullTranscript = '';
 
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          if (event.results[i].isFinal) {
-            finalTranscript += event.results[i][0].transcript;
-          } else {
-            interimTranscript += event.results[i][0].transcript;
-          }
+        for (let i = 0; i < event.results.length; ++i) {
+          fullTranscript += event.results[i][0].transcript;
         }
 
-        setTranscription(finalTranscript || interimTranscript);
-        
-        if (finalTranscript) {
-          handleUserAudio(finalTranscript);
-        }
+        setTranscription(fullTranscript);
+        latestTranscriptRef.current = fullTranscript;
       };
 
       recognition.current.onerror = (event) => {
         console.error("Speech recognition error:", event.error);
         setIsListening(false);
+        setIsMuted(true);
+        setTranscription("");
       };
 
       recognition.current.onend = () => {
         setIsListening(false);
+        setIsMuted(true);
+        if (latestTranscriptRef.current) {
+          if (handleUserAudioRef.current) handleUserAudioRef.current(latestTranscriptRef.current);
+          latestTranscriptRef.current = "";
+        }
+        setTranscription("");
       };
     }
     
@@ -206,9 +208,19 @@ const VideoConsultation = () => {
     }
   };
 
+  useEffect(() => {
+    handleUserAudioRef.current = handleUserAudio;
+  });
+
   const toggleMic = () => {
     const nextMuted = !isMuted;
     setIsMuted(nextMuted);
+
+    if (!nextMuted && typeof window !== 'undefined' && window.speechSynthesis) {
+        const u = new SpeechSynthesisUtterance("");
+        u.volume = 0;
+        window.speechSynthesis.speak(u);
+    }
     
     if (nextMuted) {
       if (recognition.current && isListening) {

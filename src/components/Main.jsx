@@ -30,17 +30,8 @@ const Main = () => {
     }
   };
 
-  const handleVideoConsultClick = async () => {
-    if (user) {
-      navigate('/video-consultation');
-    } else {
-      try {
-        await loginWithGoogle();
-        navigate('/video-consultation');
-      } catch (err) {
-        console.error("Login Error:", err);
-      }
-    }
+  const handleVideoConsultClick = () => {
+    navigate('/video-consultation');
   };
 
 

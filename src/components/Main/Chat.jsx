@@ -15,7 +15,7 @@ const Chat = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const userName = "Subham";
+
   const chatEndRef = useRef(null);
   const navigate = useNavigate();
 
@@ -87,7 +87,7 @@ const Chat = () => {
         setIsListening(false);
         setMessages((prev) => [
           ...prev,
-          { text: "Oops, Subham! Speech samajh nahi aaya, fir se bolo na...", sender: "ai", timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) },
+          { text: "Oops! Speech samajh nahi aaya, fir se bolo na...", sender: "ai", timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) },
         ]);
       };
 
@@ -103,56 +103,7 @@ const Chat = () => {
       };
     }
 
-    // Fetch real EHR data
-    const fetchEHRData = async () => {
-      try {
-        const patientId = "67ccc44c671f5aa635f458e1"; // Hardcoded patient ID from routes.js
-        const response = await fetch(`${API_BASE_URL}/api/patients/${patientId}`);
-        if (!response.ok) throw new Error("Failed to fetch patient records");
-        const data = await response.json();
-        setDynamicEhrData(data);
-      } catch (err) {
-        console.error("Error fetching dynamic EHR data:", err);
-      }
-    };
-    fetchEHRData();
   }, []);
-
-  const [dynamicEhrData, setDynamicEhrData] = useState(null);
-
-  // Subham's EHR Data
-  const ehrData = {
-    name: "Subham Khandual",
-    dob: "07/11/2005",
-    gender: "male",
-    bloodGroup: "0+",
-    occupation: "self-employed",
-    bloodDonations: 1,
-    lastDonation: "12/9/2024",
-    donationEligibility: true,
-    weight: "58 kg",
-    height: "123 cm",
-    bloodPressure: "not specified",
-    chronicConditions: ["heart disease"],
-    familyHistory: ["risk of stroke"],
-    surgeries: "none",
-    medicationAllergies: "none",
-    currentMedications: "none",
-    pastMedications: "none",
-    ongoingTherapies: "none",
-    lifestyle: {
-      smoking: "never smoker",
-      exercise: "rarely",
-      sleep: "3 hours daily",
-      diet: "vegetarian",
-      alcohol: "never",
-    },
-    doctorNotes: {
-      primarySymptoms: "none",
-      initialDiagnosis: "none",
-      followUpRequired: "no",
-    },
-  };
 
   const medConfig = {
     identity: {
@@ -192,25 +143,22 @@ const Chat = () => {
       6. Keep essential English medical terms intact
       7. Be tolerant of mixed language inputs
       
-      **User's EHR Data:**
-      ${JSON.stringify(dynamicEhrData || ehrData, null, 2)}
-      
       Instructions:
-      - Use the EHR data to provide personalized health suggestions based on the user's medical history, lifestyle, and family history.
-      - Suggest actions like doctor visits, lifestyle changes, or reminders based on the EHR when relevant to the user's input.
+      - Suggest actions like doctor visits, lifestyle changes, or reminders when relevant to the user's input.
       - When the user mentions topics like doctors, medicine, blood donation, or other health features, respond helpfully and conversationally without suggesting any page redirects.
       
       Examples:
       User (Hinglish): "Mujhe blood donate karna hai"
-      Response: "Subham, tu eligible hai blood donate karne ke liye since last donation 12/9/2024 ko tha. Kya tujhe koi specific information chahiye blood donation ke baare mein?"
+      Response: "Bandhu, blood donate karna bohot accha kaam hai! Kya tujhe koi specific information chahiye blood donation ke baare mein?"
       
       User (Hinglish): "Mujhe doctor se milna hai"
-      Response: "Subham, heart disease history ko dekhte hue doctor se milna acha idea hai. Kya main tujhe kisi specific doctor ke baare mein bataun ya appointment lene mein help karun?"`,
+      Response: "Zaroor bandhu, doctor se milna acha idea hai. Kya main tujhe kisi specific doctor ke baare mein bataun ya appointment lene mein help karun?"`,
   };
 
   useEffect(() => {
+    const welcomeText = "Namaste mein hoon Suusri, apki cute health assistant. Bol na, kya hua hai, bandhu? Aaj kya help karu? ...";
     const initialMessages = [{
-      text: `Welcome, ${userName}! Main hoon Suusri, apki cute health assistant. Bol na, kya hua hai, bandhu? Aaj kya help karu? ...`,
+      text: welcomeText,
       sender: "ai",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     }];
@@ -219,14 +167,14 @@ const Chat = () => {
     const initialHistory = [
       {
         role: "model",
-        parts: [{ text: `Welcome, ${userName}! Main hoon Suusri, teri cute health assistant. Bol na, kya hua hai, bandhu? Aaj kya help karu? ...` }],
+        parts: [{ text: welcomeText }],
       },
     ];
     setConversationHistory(initialHistory);
 
-    const hindiWelcome = `स्वागत है, ${userName}! मैं हूँ सूसरी, आपकी प्यारी हेल्थ असिस्टेंट। बोलो ना, क्या हुआ है, बंधु? आज क्या मदद करूँ? ...`;
+    const hindiWelcome = "नमस्ते मैं हूँ सूसरी, आपकी प्यारी हेल्थ असिस्टेंट। बोल ना, क्या हुआ है, बंधु? आज क्या हेल्प करूँ? ...";
     speakText(hindiWelcome);
-  }, [userName, speakText]); // Added speakText to dependencies
+  }, [speakText]);
 
   // Save messages to localStorage whenever they change
   useEffect(() => {
@@ -241,9 +189,9 @@ const Chat = () => {
       recognition.current.start();
       setMessages((prev) => [
         ...prev,
-        { text: "Sun rahi hoon, Subham! Bol na...", sender: "ai", timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) },
+        { text: "Sun rahi hoon! Bol na...", sender: "ai", timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) },
       ]);
-      speakText("सुन रही हूँ, Subham! बोल ना...");
+      speakText("सुन रही हूँ! बोल ना...");
     }
   };
 
@@ -283,8 +231,8 @@ const Chat = () => {
       setMessages([]);
       setConversationHistory([]);
       localStorage.removeItem("suusriMessages");
-      const clearMessage = `All messages deleted, ${userName}! Main nayi shuruaat ke liye taiyaar hoon!`;
-      const hindiClearMessage = `सभी संदेश हटा दिए गए, ${userName}! मैं नई शुरुआत के लिए तैयार हूँ!`;
+      const clearMessage = `All messages deleted! Main nayi shuruaat ke liye taiyaar hoon!`;
+      const hindiClearMessage = `सभी संदेश हटा दिए गए! मैं नई शुरुआत के लिए तैयार हूँ!`;
       setMessages([{ text: clearMessage, sender: "ai", timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) }]);
       speakText(hindiClearMessage);
     }
@@ -345,10 +293,7 @@ const Chat = () => {
 
       if (!aiText) throw new Error("Empty response from API");
 
-      aiText = aiText.replace(/bandhu|Sir|sweetie/g, userName);
-
       const hindiText = aiText
-        .replace("Subham", "शुभम")
         .replace("tu", "तू")
         .replace("hai", "है")
         .replace("main", "मैं")
@@ -379,8 +324,8 @@ const Chat = () => {
       speakText(hindiText);
     } catch (error) {
       console.error("API Error:", error);
-      const errorMessage = `Oops, ${userName}! Mu samajhi nahi, fir ek bar bolo na... 😅....`;
-      const hindiErrorMessage = `अरे, ${userName}! मैं समझी नहीं, फिर एक बार बोलो ना... 😅....`;
+      const errorMessage = `Oops! Mu samajhi nahi, fir ek bar bolo na... 😅....`;
+      const hindiErrorMessage = `अरे! मैं समझी नहीं, फिर एक बार बोलो ना... 😅....`;
       setMessages((prev) => [
         ...prev,
         { text: errorMessage, sender: "ai", timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) },

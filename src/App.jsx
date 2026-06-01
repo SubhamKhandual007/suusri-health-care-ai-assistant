@@ -11,7 +11,6 @@ import Main from './components/Main';
 
 // Lazy load other components for better performance (code splitting)
 const Chat = lazy(() => import('./components/Main/Chat'));
-const SuuSri = lazy(() => import('./components/Main/suusri'));
 const Profile = lazy(() => import('./components/Profile/Profile'));
 const VideoConsultation = lazy(() => import('./components/Main/VideoConsultation'));
 
@@ -33,7 +32,6 @@ const App = () => {
                 <Route path="/" element={<Welcome />} />
                 <Route path="/main" element={<Main />} />
                 <Route path="/chat" element={<Chat />} />
-                <Route path="/suusri" element={<SuuSri />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/video-consultation" element={<VideoConsultation />} />
               </Routes>
